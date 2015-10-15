@@ -1,5 +1,5 @@
 #Author-Patrick Rainsberry
-#Description-Quickly SHow all hidden or simply show all bodies or components
+#Description-Save and retrieve display conditions of the model
 
 
 
@@ -20,11 +20,11 @@ handlers = []
 menu_panel = 'InspectPanel'
 commandResources = './resources'
 
-commandId = 'displayStates'
-commandName = 'Display States'
-commandDescription = 'Manage Display States of Parts'
+commandId = 'displaySave'
+commandName = 'Display Saver'
+commandDescription = 'Manage Display of Parts'
 
-DS_CmdId = 'SAB_CmdId'
+DS_CmdId = 'DS_CmdId'
 cmdIds = [DS_CmdId]
 
 def commandDefinitionById(id):
@@ -120,7 +120,7 @@ def getFileName():
         doc = app.activeDocument
         
         home = expanduser("~")
-        home += '/displayStates/'
+        home += '/displaySaver/'
         
         if not os.path.exists(home):
             os.makedirs(home)
@@ -129,7 +129,7 @@ def getFileName():
         if not os.path.isfile(fileName):
             new_file = open( fileName, 'w' )                        
             new_file.write( '<?xml version="1.0"?>' )
-            new_file.write( "<displaystates /> ")
+            new_file.write( "<displaySaves /> ")
             new_file.close()
         
         return fileName
@@ -154,8 +154,10 @@ def run(context):
                     inputs = command.commandInputs
                     if inputs.itemById('save').value:
                         inputs.itemById('currentState').isVisible = False
+                        inputs.itemById('newName').isEnabled = True
                     else:
                         inputs.itemById('currentState').isVisible = True
+                        inputs.itemById('newName').isEnabled = False
 
                 except:
                     if ui:
@@ -205,7 +207,7 @@ def run(context):
                     
                     inputs = cmd.commandInputs
                     
-                    dropDown = inputs.addDropDownCommandInput('currentState', 'Select Display State', adsk.core.DropDownStyles.TextListDropDownStyle)
+                    dropDown = inputs.addDropDownCommandInput('currentState', 'Select Saved Display:', adsk.core.DropDownStyles.TextListDropDownStyle)
                     dropDownItems = dropDown.listItems
                     
                     dropDownItems.add('Current', True)
@@ -213,8 +215,9 @@ def run(context):
                     for state in root.findall('state'):
                         dropDownItems.add(state.get('name'), False,)
                         
-                    inputs.addBoolValueInput('save', 'Save current display?', True)
-                    inputs.addStringValueInput('newName', 'New Display State Name:', 'New Display State')                           
+                    inputs.addBoolValueInput('save', 'Save current display condition?', True)
+                    inputs.addStringValueInput('newName', 'New Display Name:', 'New Display') 
+                         
                         
                 except:
                     if ui:
@@ -257,7 +260,7 @@ def run(context):
             DS_cmdDef = cmdDefs.itemById(DS_CmdId)
             if not DS_cmdDef:
                 # commandDefinitionNAV = cmdDefs.addSplitButton(showAllBodiesCmdId, otherCmdDefs, True)
-                DS_cmdDef = cmdDefs.addButtonDefinition(DS_CmdId, 'Display States', 'Manage Display states of Bodies and Components',commandResources)
+                DS_cmdDef = cmdDefs.addButtonDefinition(DS_CmdId, 'Display Saver', 'Manage Display of Bodies and Components',commandResources)
             onCommandCreated = DS_CreatedHandler()
             DS_cmdDef.commandCreated.add(onCommandCreated)
             # keep the handler referenced beyond this function

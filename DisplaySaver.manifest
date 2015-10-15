@@ -4,7 +4,7 @@
 	"id":	"84b3936c-0542-4976-af75-9de044ca3774",
 	"author":	"Patrick Rainsberry",
 	"description":	{
-		"":	"Manage Display States for an Assembly"
+		"":	"Manage Display of Components for an Assembly"
 	},
 	"version":	"1.0",
 	"runOnStartup":	false,
