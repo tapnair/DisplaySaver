@@ -6,6 +6,7 @@ Fusion 360 Script for Saving Display conditions
 First see [How to install sample Add-Ins and Scripts](https://rawgit.com/AutodeskFusion360/AutodeskFusion360.github.io/master/Installation.html)
 
 This addin allows you to save and retrieve the display of components in the graphics window.
+
 See a video here: https://youtu.be/pvL8eC3pYoY
 
 If you select a saved display from the drop down it will revert the display to that condition.  New parts will retain their current state.  Selecting Current or cancel will revert to the hide/show state of all components when you entered the command.
