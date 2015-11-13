@@ -1,5 +1,5 @@
 # DisplaySaver
-Fusion 360 Script for Saving Display conditions
+Fusion 360 Add-in for Saving Display conditions
 
 ![Display Saver Dialog](./resources/displaySaverUI.png)
 ## Usage:
